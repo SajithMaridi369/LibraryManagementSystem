@@ -13,3 +13,11 @@ C:\Users\SajithMaridi\Desktop\dotnet code\obj\MCD\Debug\net6.0\refint\dotnet cod
 C:\Users\SajithMaridi\Desktop\dotnet code\obj\MCD\Debug\net6.0\dotnet code.pdb
 C:\Users\SajithMaridi\Desktop\dotnet code\obj\MCD\Debug\net6.0\dotnet code.genruntimeconfig.cache
 C:\Users\SajithMaridi\Desktop\dotnet code\obj\MCD\Debug\net6.0\ref\dotnet code.dll
+C:\Users\SajithMaridi\Desktop\LibraryManagementSystem\obj\MCD\Debug\net6.0\dotnet code.csproj.AssemblyReference.cache
+C:\Users\SajithMaridi\Desktop\LibraryManagementSystem\obj\MCD\Debug\net6.0\dotnet code.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SajithMaridi\Desktop\LibraryManagementSystem\obj\MCD\Debug\net6.0\dotnet code.AssemblyInfoInputs.cache
+C:\Users\SajithMaridi\Desktop\LibraryManagementSystem\obj\MCD\Debug\net6.0\dotnet code.AssemblyInfo.cs
+C:\Users\SajithMaridi\Desktop\LibraryManagementSystem\obj\MCD\Debug\net6.0\dotnet code.csproj.CoreCompileInputs.cache
+C:\Users\SajithMaridi\Desktop\LibraryManagementSystem\obj\MCD\Debug\net6.0\dotnet code.dll
+C:\Users\SajithMaridi\Desktop\LibraryManagementSystem\obj\MCD\Debug\net6.0\refint\dotnet code.dll
+C:\Users\SajithMaridi\Desktop\LibraryManagementSystem\obj\MCD\Debug\net6.0\dotnet code.pdb

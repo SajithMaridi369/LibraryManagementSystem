@@ -470,19 +470,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sajithm\\.nuget\\packages\\": {}
+    "C:\\Users\\SajithMaridi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sajithm\\Desktop\\LMS\\dotnet code.csproj",
+      "projectUniqueName": "C:\\Users\\SajithMaridi\\Desktop\\LibraryManagementSystem\\dotnet code.csproj",
       "projectName": "dotnet code",
-      "projectPath": "C:\\Users\\sajithm\\Desktop\\LMS\\dotnet code.csproj",
-      "packagesPath": "C:\\Users\\sajithm\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sajithm\\Desktop\\LMS\\obj\\",
+      "projectPath": "C:\\Users\\SajithMaridi\\Desktop\\LibraryManagementSystem\\dotnet code.csproj",
+      "packagesPath": "C:\\Users\\SajithMaridi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\SajithMaridi\\Desktop\\LibraryManagementSystem\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sajithm\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\SajithMaridi\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -527,7 +527,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

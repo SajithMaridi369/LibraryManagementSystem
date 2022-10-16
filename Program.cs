@@ -75,7 +75,7 @@ namespace Sample
                 switch (admin_choice)
                 {
                     case 1:
-                        displayAvailableUsers();
+                        displayAvailableUsers(con);
                         break;
                     case 2:
                         addBook(con);
@@ -87,7 +87,7 @@ namespace Sample
                         updateBook(con);
                         break;
                     case 5:
-                        viewOrders();
+                        viewOrders(con);
                         break;
                     case 6:
                         viewBooks(con);
@@ -99,18 +99,25 @@ namespace Sample
                 }
             }
         }
-        public static void displayAvailableUsers()
+        public static void displayAvailableUsers(SqlConnection con)
         {
-            if (Student.students_list.Count == 0)
+            string query = "select count(*) from StudentTable;";
+            SqlCommand cmd = new SqlCommand(query, con);
+            int res = (int)cmd.ExecuteScalar();
+            if (res == 0)
             {
                 Console.WriteLine("\nNo Users registered...!!");
                 return;
             }
+            query = "select * from StudentTable;";
+            cmd = new SqlCommand(query, con);
+            SqlDataReader dr = cmd.ExecuteReader();
             Console.WriteLine("\nAvailable users are : ");
-            foreach (StudentDatabase obj in Student.students_list)
+            while (dr.Read())
             {
-                Console.WriteLine(obj.id + "\t" + obj.name + "\tBook Taken : " + obj.book_taken);
+                Console.WriteLine(dr.GetValue(0).ToString() + "\t" + dr.GetValue(1).ToString() + "\tBook Taken : " + dr.GetValue(3).ToString() + "\tReturn back in : " + dr.GetValue(4).ToString());
             }
+            dr.Close();
         }
         public static void addBook(SqlConnection con)
         {
@@ -119,8 +126,10 @@ namespace Sample
             string query = "select * from Book";
             SqlCommand cmd = new SqlCommand(query, con);
             SqlDataReader dr = cmd.ExecuteReader();
+            int count = 0;
             while (dr.Read())
             {
+                count += 1;
                 if (dr.GetValue(1).ToString() == book_name)
                 {
                     Console.WriteLine("Book already exists in library...!!");
@@ -136,7 +145,7 @@ namespace Sample
             int no_of_copies = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter cost of the book : ");
             int cost = Convert.ToInt32(Console.ReadLine());
-            string book_id = "B-" + Convert.ToString((Book_list.Count) + 1);
+            string book_id = "B-" + Convert.ToString(count + 1);
             query = "insert into Book('" + book_id + "', '" + book_name + "', '" + book_author + "', '" + genre + "', " + no_of_copies + ", " + cost + ")";
             cmd = new SqlCommand(query, con);
             cmd.ExecuteNonQuery();
@@ -187,7 +196,7 @@ namespace Sample
                 Console.WriteLine("Invalid Book ID...!!!");
                 return;
             }
-            string book_id = "B-" + Convert.ToString((Book_list.Count) + 1);
+            string book_id = "B-" + Convert.ToString(res + 1);
             query = "select * from Book where book_id=" + book_id + ";";
             cmd = new SqlCommand(query, con);
             SqlDataReader dr = cmd.ExecuteReader();
@@ -210,24 +219,31 @@ namespace Sample
             cmd = new SqlCommand(query, con);
             cmd.ExecuteNonQuery();
         }
-        public static void viewOrders()
+        public static void viewOrders(SqlConnection con)
         {
-            if (Student.students_list.Count == 0)
+            string query = "select count(*) from StudentTable;";
+            SqlCommand cmd = new SqlCommand(query, con);
+            int res = (int)cmd.ExecuteScalar();
+            if (res == 0)
             {
                 Console.WriteLine("No users registered..!!");
                 return;
             }
+            query = "select * from StudentTable;";
+            cmd = new SqlCommand(query, con);
+            SqlDataReader dr = cmd.ExecuteReader();
             int order_count = 0;
-            foreach (StudentDatabase obj in Student.students_list)
+            while (dr.Read())
             {
-                if (!obj.book_taken.Equals("None"))
+                if (!dr.GetValue(3).ToString().Equals("None"))
                 {
-                    Console.WriteLine(obj.id + "\t" + obj.name + "\t" + obj.book_taken + "\t" + obj.return_time + "-days to return");
+                    Console.WriteLine(dr.GetValue(0).ToString() + "\t" + dr.GetValue(1).ToString() + "\t" + dr.GetValue(3).ToString() + "\t" + dr.GetValue(4).ToString() + "-days to return");
                     order_count += 1;
                 }
             }
             if (order_count == 0)
                 Console.WriteLine("No orderes received...!!");
+            dr.Close();
         }
         public static void viewBooks(SqlConnection con)
         {
@@ -298,13 +314,13 @@ namespace Sample
             if (dr.GetValue(2).ToString().Equals(password))
             {
                 displayUserOperations(con, user_name);
-                return;
             }
             else
             {
                 Console.WriteLine("Entered invalid password...!!");
-                return;
             }
+            dr.Close();
+            return;
         }
         public static void displayUserOperations(SqlConnection con, string user_name)
         {
@@ -372,9 +388,11 @@ namespace Sample
             if (dr.GetValue(3).ToString().Equals("None"))
             {
                 Console.WriteLine("No book taken...!!");
+                dr.Close();
                 return;
             }
             Console.WriteLine("\nBook taken : " + dr.GetValue(3).ToString() + "\nReturn before : " + dr.GetValue(4).ToString() + " days.");
+            dr.Close();
         }
         public static void returnBook(SqlConnection con, string user_name)
         {
@@ -396,17 +414,18 @@ namespace Sample
             cmd = new SqlCommand(query, con);
             dr = cmd.ExecuteReader();
             dr.Read();
-            int copies = dr.GetValue(4);
+            int copies = Convert.ToInt32(dr.GetValue(4).ToString());
             query = "update Book set no_of_copies = " + (copies + 1) + " where book_id = " + bk_taken + ";";
             cmd = new SqlCommand();
             cmd.ExecuteNonQuery();
             Console.WriteLine("Successfully returned...");
+            dr.Close();
         }
         public static void placeOrder(SqlConnection con, string user_name)
         {
             string query = "select count(*) from Book;";
             SqlCommand cmd = new SqlCommand(query, con);
-            int cnt = cmd.ExecuteScalar();
+            int cnt = (int)cmd.ExecuteScalar();
             if (cnt == 0)
             {
                 Console.WriteLine("Library is empty...!!");
@@ -420,6 +439,7 @@ namespace Sample
             if (puchased.Equals("None"))
             {
                 Console.WriteLine("Return taken book to place a new order...!!");
+                dr.Close();
                 return;
             }
             Console.WriteLine("Enter Book ID to place order : ");
@@ -427,6 +447,7 @@ namespace Sample
             if (entered_id > cnt)
             {
                 Console.WriteLine("Entered Invalid ID...!!");
+                dr.Close();
                 return;
             }
             string bk_id = "B-" + Convert.ToString(entered_id);
@@ -435,10 +456,11 @@ namespace Sample
             dr = cmd.ExecuteReader();
             dr.Read();
             string bk_name = dr.GetValue(1).ToString();
-            int copies = dr.GetValue(4);
+            int copies = Convert.ToInt32(dr.GetValue(4).ToString());
             if (copies == 0)
             {
                 Console.WriteLine("No copies are available...!!");
+                dr.Close();
                 return;
             }
             query = "update StudentTable set booktaken = " + bk_name + ", returntime = 10";
@@ -448,6 +470,7 @@ namespace Sample
             cmd = new SqlCommand(query, con);
             cmd.ExecuteNonQuery();
             Console.WriteLine("Order Placed");
+            dr.Close();
         }
     }
 }
